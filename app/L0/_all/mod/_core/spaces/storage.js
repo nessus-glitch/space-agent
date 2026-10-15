@@ -36,6 +36,20 @@ import {
 } from "/mod/_core/spaces/space-metadata.js";
 
 const LISTED_SPACE_RECORD_REUSE_WINDOW_MS = 5000;
+const SUPPORTED_WIDGET_PATCH_EDIT_FIELDS = Object.freeze([
+  "content",
+  "endLine",
+  "find",
+  "from",
+  "line",
+  "range",
+  "replace",
+  "search",
+  "startLine",
+  "text",
+  "to",
+  "value"
+]);
 
 let recentListedSpaceRecords = new Map();
 let recentListedSpaceRecordsAt = 0;
@@ -618,6 +632,18 @@ function isWidgetPatchTextLike(value) {
   return typeof value === "string" || typeof value === "number" || typeof value === "boolean";
 }
 
+function assertKnownWidgetPatchEditFields(edit) {
+  const unknownFields = Object.keys(edit).filter(
+    (key) => !SUPPORTED_WIDGET_PATCH_EDIT_FIELDS.includes(key)
+  );
+
+  if (unknownFields.length) {
+    throw new Error(
+      `Widget patch edits do not support \`${unknownFields.join("`, `")}\`. Supported edit fields: \`${SUPPORTED_WIDGET_PATCH_EDIT_FIELDS.join("`, `")}\`. No files were written.`
+    );
+  }
+}
+
 function readWidgetPatchContentField(edit = {}) {
   if (hasOwnWidgetPatchField(edit, "content")) {
     return {
@@ -731,6 +757,8 @@ function normalizeWidgetTextPatchEdit(edit, sourceText) {
 
 function normalizeWidgetPatchEdit(edit, lineCount, sourceText) {
   const normalizedEdit = edit && typeof edit === "object" ? edit : {};
+
+  assertKnownWidgetPatchEditFields(normalizedEdit);
 
   if (hasOwnWidgetPatchField(normalizedEdit, "find") || hasOwnWidgetPatchField(normalizedEdit, "search")) {
     return normalizeWidgetTextPatchEdit(normalizedEdit, sourceText);

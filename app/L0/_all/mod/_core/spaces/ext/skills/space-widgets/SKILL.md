@@ -140,6 +140,7 @@ patch vs rewrite
 - Omit to to insert before from
 - Omit content on a ranged line edit to delete
 - Common line aliases like line, startLine/endLine, range, text, and replace are tolerated, but prefer the canonical shapes above
+- Only these edit fields exist: content, endLine, find, from, line, range, replace, search, startLine, text, to, value. Any other field, such as replacement or newText, fails the whole patch before anything is written
 - Do not mix exact find edits and line edits in the same call
 - Do not overlap edits
 - The runtime applies edits from higher line numbers down to lower ones
