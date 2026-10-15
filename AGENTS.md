@@ -88,6 +88,7 @@ Default section order:
 
 - `/app/AGENTS.md` - app/ is the primary Space Agent runtime.
 - `/commands/AGENTS.md` - commands/ contains CLI command modules used by space.
+- `/discoveries/AGENTS.md` - discoveries/ holds one logged note per unrelated defect found while working on something else.
 - `/packaging/AGENTS.md` - packaging/ contains native app hosts and the packaging surface around them.
 - `/server/AGENTS.md` - server/ is the thin local infrastructure runtime.
 - `/tests/AGENTS.md` - tests/ owns repo-level verification harnesses and evaluation fixtures
