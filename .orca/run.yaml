@@ -1,0 +1,4 @@
+# .orca/run.yaml — Level-2 run-model for space-agent (Node app from source)
+runmode: process
+serve: "node space serve --port $WORKBENCH_BACKEND_PORT"
+needs: []
